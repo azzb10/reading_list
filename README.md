@@ -1,2 +1,2 @@
 # reading_list
- Reading list made with flutter
+ Reading list app with flutter
