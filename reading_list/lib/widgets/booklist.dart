@@ -4,10 +4,15 @@ import 'package:reading_list/pages/add_book_page.dart';
 import 'package:reading_list/widgets/horizontal_line.dart';
 
 class Booklist extends StatelessWidget {
-  final List<BookModel> bookList;
+  final Set<BookModel> bookList;
   final Function(BookModel) onSubmit;
+  final Function(BookModel) onDelete;
 
-  const Booklist({Key? key, required this.bookList, required this.onSubmit})
+  const Booklist(
+      {Key? key,
+      required this.bookList,
+      required this.onSubmit,
+      required this.onDelete})
       : super(key: key);
 
   @override
@@ -16,13 +21,25 @@ class Booklist extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, i) {
-        final book = bookList[i];
+        final book = bookList.elementAt(i);
         return ListTile(
-          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
               builder: (_) => AddBookPage(
-                    book: book,
-                    onSubmit: onSubmit,
-                  ))),
+                book: book,
+                onSubmit: onSubmit,
+              ),
+            ),
+          ),
+          trailing: GestureDetector(
+            onTap: () {
+              onDelete(book);
+            },
+            child: const Padding(
+              padding: EdgeInsets.only(right: 12.0),
+              child: Icon(Icons.delete_forever),
+            ),
+          ),
           title: Padding(
             padding: const EdgeInsets.only(left: 50.0),
             child: Text(
