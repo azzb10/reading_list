@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reading_list/models/book_model.dart';
 import 'package:reading_list/pages/add_book_page.dart';
@@ -13,11 +12,24 @@ class BooklistPage extends StatefulWidget {
 }
 
 class _BooklistPageState extends State<BooklistPage> {
-  late List<BookModel> myBooks;
+  late Set<BookModel> myBooks;
+
+  late Function(BookModel) onSubmit;
+  late Function(BookModel) onDelete;
 
   @override
   void initState() {
-    myBooks = [];
+    myBooks = {};
+    onSubmit = (BookModel book) {
+      setState(() {
+        myBooks.add(book);
+      });
+    };
+    onDelete = (BookModel book) {
+      setState(() {
+        myBooks.remove(book);
+      });
+    };
     super.initState();
   }
 
@@ -48,13 +60,7 @@ class _BooklistPageState extends State<BooklistPage> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (_) => AddBookPage(
-                                  onSubmit: (book) {
-                                    setState(
-                                      () {
-                                        myBooks.add(book);
-                                      },
-                                    );
-                                  },
+                                  onSubmit: onSubmit,
                                 ),
                               ),
                             );
@@ -69,12 +75,10 @@ class _BooklistPageState extends State<BooklistPage> {
                   ),
                   const HorizontalLine(),
                   Booklist(
-                      bookList: myBooks,
-                      onSubmit: (book) {
-                        setState(() {
-                          myBooks.add(book);
-                        });
-                      }),
+                    bookList: myBooks,
+                    onSubmit: onSubmit,
+                    onDelete: onDelete,
+                  ),
                   if (myBooks.isNotEmpty) const HorizontalLine(),
                 ],
               ),
