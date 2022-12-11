@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:reading_list/pages/add_book_page.dart';
 import 'package:reading_list/pages/booklist_page.dart';
 
 void main() {
