@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:reading_list/models/book_model.dart';
 
@@ -19,14 +21,14 @@ class _AddBookPageState extends State<AddBookPage> {
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
-    book = widget.book ?? BookModel();
+    book = widget.book ?? BookModel(id: Random().nextInt(50000));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF1EF88),
+      backgroundColor: const Color(0xFFF1EF88),
       body: SafeArea(
         child: Form(
           key: _formKey,
