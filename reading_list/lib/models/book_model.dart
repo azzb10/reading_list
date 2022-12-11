@@ -1,9 +1,20 @@
 class BookModel {
-  BookModel({this.title = '', this.description = '', this.read = false});
+  BookModel({
+    required this.id,
+    this.title = '',
+    this.description = '',
+    this.read = false,
+  });
 
+  int id;
   String title;
   String description;
   bool read;
+
+  @override
+  bool operator ==(other) => other is BookModel && id == other.id;
+  @override
+  int get hashCode => id;
 
   @override
   String toString() {
